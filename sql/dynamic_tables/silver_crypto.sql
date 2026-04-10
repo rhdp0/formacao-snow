@@ -1,4 +1,4 @@
-CREATE OR REPLACE DYNAMIC TABLE POC.DEV.silver_crypto
+CREATE OR REPLACE DYNAMIC TABLE FORMACAO.DEV.silver_crypto
 LAG = '30 minutes'
 WAREHOUSE = 'COMPUTE_WH'
 COMMENT = 'Camada Silver - Dados normalizados a partir da Bronze RAW'
@@ -31,5 +31,5 @@ SELECT
     loaded_at as bronze_loaded_at,
     CURRENT_TIMESTAMP() as silver_created_at
     
-FROM POC.DEV.bronze_crypto_raw
+FROM FORMACAO.DEV.bronze_crypto_raw
 WHERE raw_data:symbol IS NOT NULL;  -- Filtra registros inválidos

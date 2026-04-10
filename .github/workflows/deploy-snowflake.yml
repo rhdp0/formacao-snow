@@ -65,7 +65,7 @@ jobs:
           for file in $ORDERED_FILES; do
             echo "Running $file on schema DEV"
             OUTPUT=$(snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-              -d POC -s DEV \
+              -d FORMACAO -s DEV \
               -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
               -f $file)
             echo "$OUTPUT"
@@ -74,7 +74,7 @@ jobs:
               if [[ -n "$PROC_NAME" ]]; then
                 echo "Calling procedure $PROC_NAME on schema DEV"
                 snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-                  -d POC -s DEV \
+                  -d FORMACAO -s DEV \
                   -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
                   -q "CALL $PROC_NAME();"
               else
@@ -139,7 +139,7 @@ jobs:
           for file in $ORDERED_FILES; do
             echo "Running $file on schema QA"
             OUTPUT=$(snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-              -d POC -s QA \
+              -d FORMACAO -s QA \
               -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
               -f $file)
             echo "$OUTPUT"
@@ -148,7 +148,7 @@ jobs:
               if [[ -n "$PROC_NAME" ]]; then
                 echo "Calling procedure $PROC_NAME on schema QA"
                 snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-                  -d POC -s QA \
+                  -d FORMACAO -s QA \
                   -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
                   -q "CALL $PROC_NAME();"
               else
@@ -212,7 +212,7 @@ jobs:
           for file in $ORDERED_FILES; do
             echo "Running $file on schema ${{ env.SCHEMA_PRD }}"
             OUTPUT=$(snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-              -d POC -s ${{ env.SCHEMA_PRD }} \
+              -d FORMACAO -s ${{ env.SCHEMA_PRD }} \
               -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
               -f $file)
             echo "$OUTPUT"
@@ -221,7 +221,7 @@ jobs:
               if [[ -n "$PROC_NAME" ]]; then
                 echo "Calling procedure $PROC_NAME on schema ${{ env.SCHEMA_PRD }}"
                 snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER \
-                  -d POC -s ${{ env.SCHEMA_PRD }} \
+                  -d FORMACAO -s ${{ env.SCHEMA_PRD }} \
                   -h "$SNOWSQL_ACCOUNT.snowflakecomputing.com" -p 443 \
                   -q "CALL $PROC_NAME();"
               else
