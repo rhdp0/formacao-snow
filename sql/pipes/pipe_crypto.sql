@@ -8,7 +8,7 @@ FROM (
         $1 as raw_data,                          -- JSON inteiro como VARIANT
         METADATA$FILENAME as filename,            -- Nome do arquivo
         CURRENT_TIMESTAMP() as loaded_at          -- Timestamp da carga
-    FROM @POC.PUBLIC.CRYPTO
+    FROM @FORMACAO.PUBLIC.CRYPTO
     (FILE_FORMAT => 'json_crypto')
 )
 PATTERN = '.*\.json$';                             -- Apenas arquivos .json

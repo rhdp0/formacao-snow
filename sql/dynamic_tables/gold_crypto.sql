@@ -1,5 +1,5 @@
 -- Exemplo de Gold: Médias diárias por símbolo
-CREATE OR REPLACE DYNAMIC TABLE POC.DEV.gold_crypto_daily_metrics
+CREATE OR REPLACE DYNAMIC TABLE FORMACAO.DEV.gold_crypto_daily_metrics
 LAG = '24 hours'
 WAREHOUSE = 'COMPUTE_WH'
 AS
@@ -12,5 +12,5 @@ SELECT
     MAX(last_price_usd) as max_price_usd,
     STDDEV(last_price_usd) as price_volatility,
     (MAX(last_price_usd) - MIN(last_price_usd)) / AVG(last_price_usd) * 100 as daily_range_pct
-FROM POC.DEV.silver_crypto_prices
+FROM FORMACAO.DEV.silver_crypto_prices
 GROUP BY symbol, DATE(price_date);

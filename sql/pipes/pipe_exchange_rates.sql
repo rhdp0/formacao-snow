@@ -6,7 +6,7 @@
 
 -- Verificar se o stage existe (ajuste conforme necessário)
 -- Se usar stage externo, ajuste o nome do stage abaixo
--- Exemplo de stage: @POC.PUBLIC.NORTH/exchange_rates/
+-- Exemplo de stage: @FORMACAO.PUBLIC.NORTH/exchange_rates/
 
 -- Criar o Pipe com AUTO_INGEST = TRUE
 -- O Snowflake criará automaticamente a fila SQS e subscreverá no SNS Topic
@@ -25,7 +25,7 @@ CREATE OR REPLACE PIPE PIPE_SNS
       CAST($1 AS VARIANT) AS raw,
       METADATA$FILENAME AS filename,
       CURRENT_TIMESTAMP() AS created_at
-    FROM @POC.PUBLIC.SNOW_SQL/exc -- ⚠️ AJUSTE O STAGE SE NECESSÁRIO
+    FROM @FORMACAO.PUBLIC.SNOW_SQL/exc -- ⚠️ AJUSTE O STAGE SE NECESSÁRIO
       (FILE_FORMAT => 'JSON_FORMAT')
   )
   PATTERN = '.*\\.json$';

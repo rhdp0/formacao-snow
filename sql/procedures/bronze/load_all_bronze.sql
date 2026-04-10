@@ -20,13 +20,13 @@ def get_entity(path: str) -> str:
 def main(session: Session) -> str:
     try:
         # Step 1: List files and extract entities
-        files = session.sql("LIST @POC.PUBLIC.NORTH;").collect()
+        files = session.sql("LIST @FORMACAO.PUBLIC.NORTH;").collect()
         file_names = [f["name"] for f in files]
         
         entities = sorted({get_entity(p) for p in file_names if get_entity(p)})
         
         if not entities:
-            return 'No entities found in stage @POC.PUBLIC.NORTH'
+            return 'No entities found in stage @FORMACAO.PUBLIC.NORTH'
         
         results = []
         
@@ -57,7 +57,7 @@ def main(session: Session) -> str:
                         $1::VARIANT AS raw,
                         metadata$filename AS filename,
                         CURRENT_TIMESTAMP()::TIMESTAMP_NTZ AS created_at
-                    FROM @POC.PUBLIC.NORTH/{entity_lower}/
+                    FROM @FORMACAO.PUBLIC.NORTH/{entity_lower}/
                         (FILE_FORMAT => 'PARQUET_FORMAT')
                 );
             """
