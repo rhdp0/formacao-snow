@@ -10,13 +10,13 @@
    - **Copiar o ARN do tópico**
 
 2. ✅ **Event Notification configurado** no S3
-   - Bucket: `arrudaconsulting-datalake`
+   - Bucket: `snowflake-training-rd`
    - Prefix: `multicloud/exchange_rates/`
    - Suffix: `.json`
    - Destination: SNS Topic criado acima
 
 3. ✅ **Stage configurado** no Snowflake
-   - Verificar se o stage `@POC.PUBLIC.NORTH/exchange_rates/` existe
+   - Verificar se o stage `@FORMACAO.PUBLIC.NORTH/exchange_rates/` existe
    - Ou ajustar o nome do stage no script do pipe
 
 4. ✅ **File Format JSON** criado
@@ -34,7 +34,7 @@ No console AWS SNS:
 
 Abra `pipe_exchange_rates.sql` e substitua:
 - `arn:aws:sns:us-east-1:123456789012:snowpipe-exchange-rates-notifications` pelo ARN real do seu tópico
-- Ajuste o stage se necessário: `@POC.PUBLIC.NORTH/exchange_rates/`
+- Ajuste o stage se necessário: `@FORMACAO.PUBLIC.NORTH/exchange_rates/`
 
 #### 3. Executar o Script no Snowflake
 
@@ -70,7 +70,7 @@ aws sns add-permission \
 
 ```sql
 -- Ver status do pipe
-SELECT SYSTEM$PIPE_STATUS('POC.DEV.PIPE_EXCHANGE_RATES');
+SELECT SYSTEM$PIPE_STATUS('FORMACAO.DEV.PIPE_EXCHANGE_RATES');
 
 -- Ver histórico de carregamentos
 SELECT * 
@@ -90,14 +90,14 @@ ORDER BY LAST_LOAD_TIME DESC;
    python API/main.py
    
    # Ou manualmente via AWS CLI
-   aws s3 cp arquivo.json s3://arrudaconsulting-datalake/multicloud/exchange_rates/
+   aws s3 cp arquivo.json s3://snowflake-training-rd/multicloud/exchange_rates/
    ```
 
 2. Aguarde ~30-60 segundos
 
 3. Verifique se os dados foram carregados:
    ```sql
-   SELECT * FROM POC.DEV.bronze_exchange_rates 
+   SELECT * FROM FORMACAO.DEV.bronze_exchange_rates 
    ORDER BY created_at DESC 
    LIMIT 10;
    ```
@@ -106,7 +106,7 @@ ORDER BY LAST_LOAD_TIME DESC;
 
 #### Ver status do pipe:
 ```sql
-SELECT SYSTEM$PIPE_STATUS('POC.PUBLIC.PIPE_EXCHANGE_RATES');
+SELECT SYSTEM$PIPE_STATUS('FORMACAO.PUBLIC.PIPE_EXCHANGE_RATES');
 ```
 
 #### Ver arquivos pendentes:
@@ -152,10 +152,10 @@ ORDER BY LAST_LOAD_TIME DESC;
 
 ```sql
 -- Pausar o pipe (se necessário)
-ALTER PIPE POC.DEV.PIPE_EXCHANGE_RATES SET PIPE_EXECUTION_PAUSED = TRUE;
+ALTER PIPE FORMACAO.DEV.PIPE_EXCHANGE_RATES SET PIPE_EXECUTION_PAUSED = TRUE;
 
 -- Retomar o pipe
-ALTER PIPE POC.DEV.PIPE_EXCHANGE_RATES SET PIPE_EXECUTION_PAUSED = FALSE;
+ALTER PIPE FORMACAO.DEV.PIPE_EXCHANGE_RATES SET PIPE_EXECUTION_PAUSED = FALSE;
 
 -- Ver definição do pipe
 SHOW PIPES LIKE 'PIPE_EXCHANGE_RATES';
